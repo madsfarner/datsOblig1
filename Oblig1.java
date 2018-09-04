@@ -3,7 +3,13 @@ import java.util.NoSuchElementException;
 public class Oblig1 {
 
     public static void main(String[] args) {
-        delsortering(randomArray1(15));
+        int rand1[] = {3, 8, 1, 4, 5, 2, 6, 7};
+        int rand2[] = {1, 2, 3, 4, 6, 6, 6, 7 ,8 ,8 ,8};
+        int rand3[] = {5, 3, 7, 4, 3, 5, 7, 8, 6, 7};
+        char char1[] = {'A', 'B', 'C', 'D', 'C', 'D'};
+        rotasjon(char1);
+
+
     }
 
     public static int maks(int[] a){
@@ -57,20 +63,115 @@ public class Oblig1 {
 
     /* Denne metoden er ganske mye tregere enn maks metodene tidligere, siden denne gjør mange ombytter for å sortere tabellen, før man finner maksverdi */
 
+    //////////////////////
+    // OPPG 2
+    //////////////////////
+
+    /* Intererer igjennom tabellen, sjekker først for feilsorteringer, så sjekker om verdier er ulike. Hvis de er det telles det opp i en variabel */
+
+    public static int antallUlikeSortert(int[] a) {
+        int ulike = 1;
+        if ( a.length == 0) {
+            return 0;
+        }
+        for ( int i = 0; i < a.length-1; ++i) {
+            if (a[i] > a[i+1]) {
+                throw new IllegalStateException("Tabellen er ikke stigende");
+            }
+            if (a[i] != a[i+1]) {
+                ulike++;
+            }
+        }
+        return ulike;
+    }
+
+    //////////////////////
+    //  OPPG 3
+    //////////////////////
+    /*
+    1. Søke igjennom hvert tall i rekka
+    2. Sjekke opp mot tidligere gjennomsøkte tall
+    3. Trigge hvis tidligere tall er blitt talt(hvis det finnes tidligere tall allerede i tabellen)
+     */
+
+    public static int antallUlikeUsortert(int[] a){
+        if(a.length == 0) {
+            return 0;
+        }
+        int teller = 0;
+        boolean trigger;
+        for ( int i = 0; i < a.length; ++i){
+            trigger = false;
+            for ( int j = i-1; j >= 0; --j){
+                if( a[j] == a[i]){
+                    trigger = true;
+                    j = 0;
+                }
+            }
+            if (trigger != true) {
+                teller++;
+            }
+        }
+        return teller;
+    }
+
+
     ///////////////////////////
     // OPPG 4
     /////////////////////
 
-    public static void delsortering(int[] a){
-        for( int i = 0; i < a.length; ++i) {
-            for ( int j = 0; j < i; ++j) {
-                if( a[j] > a[j+1]){
+    /*
+    Denne fungerer ganske tilsvarende bubblesearch, men sjekker også etter tilfeller hvor et oddetall står før et partall og ignorerer disse.
+    eller hvis det står et partall før et oddetall bytter den uansett
+     */
 
+    public static int[] delsortering(int[] a){
+        for( int i = a.length; i > 0; --i) {
+            for ( int j = 1; j < i; ++j) {
+                if( a[j-1] > a[j]){
+                    if(!(a[j-1] % 2 == 1 && a[j] % 2 == 0)){
+                        bytt(a, j-1, j);
+                    }
+                } else if( a[j-1] % 2 == 0 && a[j] % 2 == 1) {
+                    bytt(a, j-1, j);
                 }
             }
         }
+        return a;
     }
 
+    //////////////////////
+    // OPPG 5 + 6
+    //////////////////////
+
+    public static void rotasjon(char[] a){
+        if(a.length <= 1){
+            return;
+        }
+        char temp = a[a.length-1];
+        for(int i = a.length-1; i >= 1; i++){
+            a[i] = a[i-1];
+        }
+        a[0] = temp;
+        //printCharArray(a);
+    }
+
+    /////////////////
+    // MINE EKSTRA METODER
+    /////////////////
+
+    public static int[] bytt(int[] a, int fra, int til){
+        int temp = a[fra];
+        a[fra] = a[til];
+        a[til] = temp;
+        return a;
+    }
+    public static void printCharArray(char[] a) {
+        for (char element: a) {
+            System.out.print(element + ", ");
+        }
+        System.out.println();
+    }
 
     /////////////////
     // METODER FRA UNDERVISNINGEN
