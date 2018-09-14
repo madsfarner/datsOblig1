@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class Oblig1 {
@@ -6,8 +7,9 @@ public class Oblig1 {
         int rand1[] = {3, 8, 1, 4, 5, 2, 6, 7};
         int rand2[] = {1, 2, 3, 4, 6, 6, 6, 7 ,8 ,8 ,8};
         int rand3[] = {5, 3, 7, 4, 3, 5, 7, 8, 6, 7};
-        char char1[] = {'A', 'B', 'C', 'D', 'C', 'D'};
-        rotasjon(char1);
+        char char1[] = {'A', 'B', 'C', 'D', 'R', 'G'};
+        rotasjon(char1, 1);
+        System.out.println(Arrays.toString(char1));
 
 
     }
@@ -149,14 +151,47 @@ public class Oblig1 {
             return;
         }
         char temp = a[a.length-1];
-        for(int i = a.length-1; i >= 1; i++){
+        for(int i = a.length-1; i >= 1; i--){
             a[i] = a[i-1];
         }
         a[0] = temp;
-        //printCharArray(a);
     }
 
-    /////////////////
+    public static void rotasjon(char[] a, int k){
+        int length = a.length;
+        if(length <= 1){
+            return;
+        }
+        k = ( k < 0 ) ? (k % length) + length : k % length;
+
+        char temp = a[0];
+        System.out.println("K: " + k);
+        System.out.println(Arrays.toString(a));
+        for (int i = 0; i < a.length - 1; i++) {
+            int getPos = (k > i) ? (i + length - k) : i - k;
+            System.out.println("i: " + i + " getPos: " + getPos + " newK: " + k + "char: ");
+            a[i] = (getPos==0) ? temp : a[getPos];
+        }
+        a[a.length - 1] = temp;
+    }
+
+    /////////////////////////
+    // OPPGAVE 7
+    /////////////////////////
+
+    public static String flett(String s, String t) {
+        return "";
+    }
+
+    /////////////////////////
+    // OPPGAVE 8
+    /////////////////////////
+
+    public static int[] indekssortering(int[] a) {
+        return null;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     // MINE EKSTRA METODER
     /////////////////
 
@@ -173,7 +208,7 @@ public class Oblig1 {
         System.out.println();
     }
 
-    /////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
     // METODER FRA UNDERVISNINGEN
     /////////////////
 
